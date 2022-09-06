@@ -18,12 +18,12 @@ const mqtt = require('mqtt');
 
 // your credentials
 const options = {
-  username: '<your_username>',
-  password: '<your_password>',
+  username: '<>',
+  password: '<>',
 };
 
 // connect to your cluster, insert your host name and port
-const client = mqtt.connect('tls://your_host:port', options);
+const client = mqtt.connect('tls:173eaa144cef42b4aeacd8eeb6470ce0.s1.eu.hivemq.cloud:8883', options);
 
 // prints a received message
 client.on('message', function(topic, message) {
@@ -40,6 +40,13 @@ client.on('error', (error) => {
   console.log('Error:', error);
 });
 
-// subscribe and publish to the same topic
-client.subscribe('messages');
-client.publish('messages', 'Hello, this message was received!');
+const user = {
+  name: 'Jack',
+  isMarried: false,
+  age: 25,
+}
+
+const userJSON = JSON.stringify(user);
+
+client.subscribe('testtopic/2');
+client.publish('testtopic/2', userJSON);
