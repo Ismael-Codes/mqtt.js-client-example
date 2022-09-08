@@ -12,9 +12,9 @@ function App() {
     rejectUnauthorized: false
   };
 
-  // const URL = "mqtt://test.mosquitto.org:8081";
+  const URL = "mqtt://test.mosquitto.org:8081";
 
-  const URL = "tls:173eaa144cef42b4aeacd8eeb6470ce0.s1.eu.hivemq.cloud:8883";
+  // const URL = "tls:173eaa144cef42b4aeacd8eeb6470ce0.s1.eu.hivemq.cloud:8883";
 
   // connect to your cluster, insert your host name and port
   // const client = mqtt.connect('wss:173eaa144cef42b4aeacd8eeb6470ce0.s1.eu.hivemq.cloud:8883', options);
