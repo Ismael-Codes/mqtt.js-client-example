@@ -12,9 +12,11 @@
     "buffer": "^6.0.3",
     "events": "^3.3.0",
     "mqtt": "^4.3.7",
+    "paho-mqtt": "^1.1.0",
     "precompiled-mqtt": "^4.3.13",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-paho-mqtt": "^1.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.0.17",
