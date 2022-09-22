@@ -1,15 +1,20 @@
+import AppBar from '@mui/material/AppBar';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import { Menu } from './components';
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
-// import mqtt from "precompiled-mqtt";
 import React from 'react';
-
 import * as mqtt from 'react-paho-mqtt';
 
-function App() {
+export default function App() {
 
   const [client, setClient] = React.useState(null);
-  const _topic = ["brianelchido"]; //Topic al que quiere conectarse
+  const _topic = ["UAEH/hive"]; //Topic al que quiere conectarse
   const _options = {}; //Options
 
   React.useEffect(() => {
@@ -17,14 +22,8 @@ function App() {
   }, [])
 
   const _init = () => {
-    const c = mqtt.connect("broker.mqttdashboard.com", Number(8000), "clientId-", _onConnectionLost, _onMessageArrived); // mqtt.connect(host, port, clientId, _onConnectionLost, _onMessageArrived)
+    const c = mqtt.connect("JULIO@broker.hivemq.com", Number(8000), "clientId-", _onConnectionLost, _onMessageArrived); // mqtt.connect(host, port, clientId, _onConnectionLost, _onMessageArrived)
     setClient(c);
-  }
-
-  // called when sending payload
-  const _sendPayload = () => {
-    const payload = mqtt.parsePayload("Hello", "World"); // topic, payload
-    client.send(payload);
   }
 
   // called when client lost connection
@@ -42,48 +41,93 @@ function App() {
 
   // called when subscribing topic(s)
   const _onSubscribe = () => {
-    client.connect({
-      onSuccess: () => {
-        for (var i = 0; i < _topic.length; i++) {
-          client.subscribe(_topic[i], _options);
+    try {
+      client.connect({
+        onSuccess: () => {
+          for (var i = 0; i < _topic.length; i++) {
+            client.subscribe(_topic[i], _options);
+          }
         }
-      }
-    }); // called when the client connects
-  }
-
-  // called when subscribing topic(s)
-  const _onUnsubscribe = () => {
-    for (var i = 0; i < _topic.length; i++) {
-      client.unsubscribe(_topic[i], _options);
+      }); // called when the client connects  
+    } catch (error) {
+      console.log(error.message);
     }
   }
 
-  // called when disconnecting the client
-  const _onDisconnect = () => {
-    client.disconnect();
-  }
+  const [alignment, setAlignment] = useState('');
 
-  const [count, setCount] = useState(0)
+  const handleChange = (event, newAlignment) => {
+    setAlignment(newAlignment);
+  };
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <button
-          style={{ color: 'white' }}
-          onClick={_onSubscribe}>
-          <h1>Subscribe Topic</h1>
-        </button>
-        <button
-          style={{ color: 'white' }}
-          onClick={_sendPayload}>
-          <h1>Send Message</h1>
-        </button>
-      </header>
-    </div>
-  )
-}
+    <>
+      <AppBar position="relative" sx={{ bgcolor: '#424242' }}>
+        <Toolbar>
+          {/* <CameraIcon sx={{ mr: 2 }} /> */}
+          <Typography variant="h6" color="inherit" noWrap>
+            MQTT
+          </Typography>
+        </Toolbar>
+      </AppBar>
+      <main>
+        {/* Hero unit */}
+        <Box
+          sx={{
+            pt: 8,
+            pb: 2,
+          }}
+        >
+          <Container maxWidth="sm">
+            <Typography
+              component="h1"
+              variant="h2"
+              align="center"
+              color="text.primary"
+              gutterBottom
+            >
+              MQTT
+            </Typography>
+            <ToggleButtonGroup
+              fullWidth
+              value={alignment}
+              exclusive
+              size='large'
+              onChange={handleChange}
+              aria-label="Platform"
+            >
+              <ToggleButton value="conCovid">Con COVID</ToggleButton>
+              <ToggleButton value="sinCovid">Sin COVID</ToggleButton>
+              <ToggleButton value="ambos">AMBOS</ToggleButton>
+            </ToggleButtonGroup>
+          </Container>
+        </Box>
+        <Container sx={{ py: 2, my: 2 }} maxWidth="lm">
+          {/* End hero unit */}
+          <Grid container>
+            <Menu alignment={alignment} />
 
-export default App
+            {/* <Grid item xs={12}>
+             
+            </Grid> */}
+          </Grid>
+        </Container>
+      </main>
+      {/* Footer */}
+      <Box sx={{ bgcolor: '#424242', p: 6, color: 'white' }} component="footer">
+        <Typography variant="h6" align="center" gutterBottom>
+          Footer
+        </Typography>
+        <Typography
+          variant="subtitle1"
+          align="center"
+          // color="text.secondary"
+          component="p"
+        >
+          Something here to give the footer a purpose!
+        </Typography>
+      </Box>
+      {/* End footer */}
+    </>
+  );
+}

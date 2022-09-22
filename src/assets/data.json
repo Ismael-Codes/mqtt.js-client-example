@@ -1,0 +1,28 @@
+{
+  "data": [
+    {
+      "id": null,
+      "nombre": null,
+      "edad": 18,
+      "peso": 12.5,
+      "estatura": 1.65,
+      "covid": null
+    },
+    {
+      "id": 578,
+      "nombre": "pepe pecas",
+      "edad": 18,
+      "peso": 12.5,
+      "estatura": 1.65,
+      "covid": true
+    },
+    {
+      "id": 245,
+      "nombre": "Benito  bodoque",
+      "edad": 18,
+      "peso": 12.5,
+      "estatura": 1.68,
+      "covid": true
+    }
+  ]
+}
