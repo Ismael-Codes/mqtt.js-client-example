@@ -4,45 +4,48 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import jsonFile from '../assets/data.json'
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 90 },
+  { field: 'id', headerName: 'ID', minWidth: 50 },
   {
-    field: 'nombre',
+    field: 'NOM',
     headerName: 'Nombre',
-    width: 200,
-    editable: true,
+    minWidth: 200,
+    flex: 1,
+    editable: false,
   },
   {
-    field: 'edad',
-    headerName: 'Edad',
-    type: 'number',
-    width: 150,
-    editable: true,
-  },
-  {
-    field: 'peso',
+    field: 'PES',
     headerName: 'Peso',
     type: 'number',
-    width: 150,
-    editable: true,
+    minWidth: 50,
+    flex: 1,
+    editable: false,
+    renderCell: (params) => (
+      `${params.row.PES}kg`
+    )
   },
   {
-    field: 'estatura',
+    field: 'EST',
     headerName: 'Estatura',
     type: 'number',
-    width: 150,
-    editable: true,
+    minWidth: 50,
+    flex: 1,
+    editable: false,
+    renderCell: (params) => (
+      `${params.row.EST}m`
+    )
   },
   {
-    field: 'covid',
+    field: 'COV',
     headerName: '¿Tiene COVID?',
     type: 'boolean',
-    width: 250,
-    editable: true,
+    minWidth: 150,
+    flex: 1,
+    editable: false,
   }
 ];
-const { data } = jsonFile;
 
-export const Table = () => {
+export const Table = ({ data }) => {
+
   return (
     <Box sx={{ height: 680, width: '100%' }}>
       <DataGrid
